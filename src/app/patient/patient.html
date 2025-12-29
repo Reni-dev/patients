@@ -1,0 +1,87 @@
+<h2 class="mt-5 mb-5">Páciensek</h2>
+
+
+<button type="button" class="btn btn-add mb-3" (click)="setShowModal()">
+    Hozzáadás
+</button>
+
+<table class="table table-striped text-center">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Név</th>
+            <th>Születés dátum</th>
+            <th>Taj szám</th>
+            <th>Telefonszám</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(patient of patients; track patient.id) {
+            <tr>
+                <td data-column="Id: ">{{ patient.id }}</td>
+                <td data-column="Név: ">{{ patient.name }}</td>
+                <td data-column="Születés dátum: ">{{ patient.birthDate }}</td>
+                <td data-column="Születés dátum: ">{{ patient.socialNumber }}</td>
+                <td data-column="Telefonszám: ">{{ patient.phone }}</td>
+                <td>
+                    <button class="btn btn-edit btn-sm" (click)="editMode(patient)" (click)="setShowModal()">Módosítás</button>
+                </td>
+                <td>
+                    <button class="btn btn-dark btn-sm" (click)="checkDelete(patient.id)">Törlés</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if(showModal){
+  
+  <!-- Modal -->
+  <div class="modal fade show" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: block">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            @if(addMode) {
+                Hozzáadás
+            } @else {
+                Módosítás
+            }
+          </h1>
+          <button type="button" class="btn-close" (click)="cancel()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="patientForm" [formGroup]="patientForm" (ngSubmit)="save()">
+                <div>
+                    <label for="id" class="form-label">Id</label>
+                    <input type="number" class="form-control" id="id" formControlName="id" readonly>
+                </div>
+                <div>
+                    <label for="name" class="form-label">Név</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                </div>
+                <div>
+                    <label for="birthDate" class="form-label">Születés dátum</label>
+                    <input type="date" class="form-control" id="birthDate" formControlName="birthDate">
+                </div>
+                <div>
+                    <label for="socialNumber" class="form-label">Taj szám</label>
+                    <input type="text" class="form-control" id="socialNumber" formControlName="socialNumber">
+                </div>
+                <div>
+                    <label for="phone" class="form-label">Telefonszám</label>
+                    <input type="text" class="form-control" id="phone" formControlName="phone">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-dark"  (click)="cancel()">Mégse</button>
+            <button type="submit" class="btn btn-light" form="patientForm"> Mentés</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+}

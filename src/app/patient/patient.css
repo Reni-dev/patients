@@ -1,0 +1,21 @@
+.btn-add{
+    background-color: white;
+    color: black;
+    border-color: rgb(185, 195, 235);
+}
+
+.btn-add:hover{
+    background-color: rgb(185, 195, 235);
+    color: white;
+}
+
+.btn-edit{
+    background-color: rgb(185, 195, 235);
+    color: white;
+}
+
+.btn-edit:hover{
+    background-color: white;
+    color: black;
+    border-color: rgb(185, 195, 235);
+}

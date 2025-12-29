@@ -1,0 +1,81 @@
+<h2 class="mt-5 mb-5">Rendelések</h2>
+
+
+<button type="button" class="btn btn-add mb-3" (click)="setShowModal()">
+    Hozzáadás
+</button>
+
+<table class="table table-striped text-center">
+    <thead>
+        <tr>
+            <th>Páciens ID</th>
+            <th>Dátum</th>
+            <th>Diagnózis</th>
+            <th>Doktor</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(visit of visits; track visit.id) {
+            <tr>
+                <td data-column="Id: ">{{ visit.patientId }}</td>
+                <td data-column="Név: ">{{ visit.date }}</td>
+                <td data-column="Születés dátum: ">{{ visit.diagnosis }}</td>
+                <td data-column="Születés dátum: ">{{ visit.doctor }}</td>
+                <td>
+                    <button class="btn btn-edit btn-sm" (click)="editMode(visit)" (click)="setShowModal()">Módosítás</button>
+                </td>
+                <td>
+                    <button class="btn btn-dark btn-sm" (click)="checkDelete(visit.id)">Törlés</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if(showModal){
+  
+  <!-- Modal -->
+  <div class="modal fade show" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: block">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            @if(addMode) {
+                Hozzáadás
+            } @else {
+                Módosítás
+            }
+          </h1>
+          <button type="button" class="btn-close" (click)="cancel()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="visitForm" [formGroup]="visitForm" (ngSubmit)="save()">
+                <div>
+                    <label for="patientId" class="form-label">Páciens Id</label>
+                    <input type="number" class="form-control" id="patientId" formControlName="patientId">
+                </div>
+                <div>
+                    <label for="date" class="form-label">Dátum</label>
+                    <input type="date" class="form-control" id="date" formControlName="date">
+                </div>
+                <div>
+                    <label for="diagnosis" class="form-label">Diagnózis</label>
+                    <input type="text" class="form-control" id="diagnosis" formControlName="diagnosis">
+                </div>
+                <div>
+                    <label for="doctor" class="form-label">Doktor</label>
+                    <input type="text" class="form-control" id="doctor" formControlName="doctor">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-dark"  (click)="cancel()">Mégse</button>
+            <button type="submit" class="btn btn-light" form="visitForm"> Mentés</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+}
